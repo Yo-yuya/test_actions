@@ -17,12 +17,12 @@ $(TARGET):  $(OBJS) $(HEADS)
 run: all
     @./$(TARGET)
 
-.PHONY:depend clean
+.PHONY: depend clean
 depend:
     $(CXX) $(INCLUDES) -MM $(SRCS) > $(DEPS)
-    @sed -i -E "s/^(.+?)\1/\2\1.o: \2\1/g"  $(DEPS)
+    @sed -i -E "s/^(.+?)\1/\2\1.o: ([^ ]+?)\1/\2\2.o: \2\1/g"  $(DEPS)
 
 clean:
-    $(RM)   $(OBJS) $(TARGET)
+    $(RM) $(OBJS) $(TARGET)
 
--include    $(DEPS)
+-include $(DEPS)
